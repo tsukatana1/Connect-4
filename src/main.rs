@@ -35,6 +35,11 @@ fn main() {
 
         let column = (column.trim().parse::<u16>().unwrap() - 1) as usize;
 
+        if column < 1 || column > 8 {
+            println!("Please choose a column between 1 and 8.");
+            continue;
+        }
+
         if (game.board[column] & positions.iter().sum::<u16>()) == positions.iter().sum::<u16>() {
             println!("You cannot stack another piece in this column as it is full.");
             continue;
