@@ -21,6 +21,7 @@ impl Display for Player {
     }
 }
 
+
 pub struct Game {
     pub players: Vec<Player>,
     pub board: Vec<u16>,
@@ -75,7 +76,7 @@ impl Game {
                     string_board += "     |";
                 }
             }
-            string_board += "\n----- ----- ----- ----- ----- ----- ----- ----\n";
+            string_board += "\n----- ----- ----- ----- ----- ----- ----- -----\n";
         }
         
         string_board

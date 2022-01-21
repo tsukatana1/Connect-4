@@ -59,6 +59,14 @@ fn main() {
             return;
         }
 
+        if tie(&game.board) {
+            print!("\x1B[2J\x1B[1;1H\n");
+            println!("It's a tie!\n");
+            println!("{}", game.create_board());
+
+            return;
+        }
+
         game.advance();
 
         print!("\x1B[2J\x1B[1;1H\n");
@@ -73,14 +81,34 @@ fn won(color: &Vec<u16>) -> bool {
             if (color[i] >> j) == 15 {
                 return true;
             }
-            else if ((color[i] >> j) & 1) != 0 && ((color[i + 1] >> j) & 1) != 0 && ((color[i + 2] >> j) & 1) != 0 && ((color[i + 3] >> j) & 1) != 0 {
+            else if i < 5 && ((color[i] >> j) & 1) != 0 && ((color[i + 1] >> j) & 1) != 0 && ((color[i + 2] >> j) & 1) != 0 && ((color[i + 3] >> j) & 1) != 0 {
                 return true;
             }
-            else if ((color[i] >> j) & 1) != 0 && ((color[i + 1] >> j) & 2) != 0 && ((color[i + 2] >> j) & 4) != 0 && ((color[i + 3] >> j) & 8) != 0 ||
-            ((color[i] >> j) & 8) != 0 && ((color[i + 1] >> j) & 4) != 0 && ((color[i + 2] >> j) & 2) != 0 && ((color[i + 3] >> j) & 1) != 0 {
+            else if i < 5 && (((color[i] >> j) & 1) != 0 && ((color[i + 1] >> j) & 2) != 0 && ((color[i + 2] >> j) & 4) != 0 && ((color[i + 3] >> j) & 8) != 0 ||
+            ((color[i] >> j) & 8) != 0 && ((color[i + 1] >> j) & 4) != 0 && ((color[i + 2] >> j) & 2) != 0 && ((color[i + 3] >> j) & 1) != 0) {
                 return true;
             }
         }
+    }
+
+    false
+}
+
+fn tie(board: &Vec<u16>) -> bool {
+
+    let positions = vec![
+        1 << 0,
+        1 << 1,
+        1 << 2,
+        1 << 3,
+        1 << 4,
+        1 << 5,
+        1 << 6,
+        1 << 7,
+    ];
+
+    if board.iter().all(|column| *column == positions.iter().sum::<u16>()) {
+        return true;
     }
 
     false
