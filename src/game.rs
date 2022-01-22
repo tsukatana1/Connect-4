@@ -6,6 +6,7 @@ pub enum Color {
     Yellow
 }
 
+//player.
 pub struct Player {
     pub values: Vec<u16>,
     pub color: Color
